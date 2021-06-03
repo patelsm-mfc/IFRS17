@@ -1,0 +1,6 @@
+data/
+archive/
+*.xlsx
+*.ctl
+*.dat
+*.MAPPED
