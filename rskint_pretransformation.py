@@ -41,7 +41,7 @@ def main():
     inputreader.loc[(inputreader['Calculation Step']=='OPENING_CURRENT'),'Accounting Date']=inputreader.loc[(inputreader['Calculation Step']=='OPENING_CURRENT'),'Accounting Date'].apply(lambda x: datetime.strptime(x,'%Y-%m-%d').date()-timedelta(1))
     inputreader.loc[(inputreader['Calculation Step'].isin(['OPENING_INCEPTION','LIC_OPENING_CURRENT','PAA_OPENING'])),'Accounting Date']=inputreader.loc[(inputreader['Calculation Step']=='OPENING_INCEPTION'),'Accounting Date'].apply(lambda x: getEOQdate(datetime.strptime(x,'%Y-%m-%d').date()).strftime('%Y-%m-%d'))
     inputreader.loc[~(inputreader['Calculation Step'].isin(['OPENING_CURRENT','OPENING_INCEPTION'])),'Accounting Date']=inputreader.loc[~(inputreader['Calculation Step'].isin(['OPENING_CURRENT','OPENING_INCEPTION'])),'Reporting Date']
-    inputreader.loc[(inputreader['Amount in Transaction Currency']!=0)&(inputreader['Valuation Method'].isin(['GMM','VFA'])),'Amount in Transaction Currency']=inputreader.loc[(inputreader['Amount in Transaction Currency']!=0)&(inputreader['Valuation Method'].isin(['GMM','VFA'])),'Amount in Transaction Currency'].apply(lambda x: round(x, 2))
+    inputreader.loc[(inputreader['Amount in Transaction Currency']!=0)&(inputreader['Valuation Method'].isin(['GMM','PAA'])),'Amount in Transaction Currency']=inputreader.loc[(inputreader['Amount in Transaction Currency']!=0)&(inputreader['Valuation Method'].isin(['GMM','PAA'])),'Amount in Transaction Currency'].apply(lambda x: round(x, 2))
     
 
     dr_amount = inputreader.loc[inputreader["Debit / Credit"] == "DR", "Amount in Transaction Currency"].sum()
@@ -60,7 +60,7 @@ def main():
     "onerous_indicator","reporting_currency_code","treaty_code"]
     
     df2 = inputreader.reindex(columns=column_names) 
-    df2=df2[round(df2["Amount in Transaction Currency"],2)!=0&(df2['Valuation Method'].isin(['GMM','VFA']))]   
+    df2=df2[round(df2["Amount in Transaction Currency"],2)!=0&(df2['Valuation Method'].isin(['GMM','PAA']))]   
     
 
     df_ctl = "Records: "+str(len(df2.index))+" Debits: "+str(round(dr_amount,2))+" Credits: "+str(round(cr_amount,2))
