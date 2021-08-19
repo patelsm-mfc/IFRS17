@@ -40,7 +40,7 @@ def acctlookup(df_before):
                         df_before.iat[14,0] = float(df_before.iat[14,0])*-1
                         writer(df_before)       
 #WRITE TO CSV
-def writer(df):
+def writer(df):        
         df.T.to_csv('C:/Users/patelsm/Desktop/git_implementation/ifrs17_scripts/RSKINT_NEW.MAPPED',index=False,mode='a',quoting=csv.QUOTE_ALL, header=False)
 
 main()
